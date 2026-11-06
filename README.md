@@ -4,4 +4,6 @@ O desenvolvimento do projeto foi pensado em uma ferramenta útil para o dia a di
 
 Ao longo das aulas aprendemos a desenvolver baseado em HTML e como o CSS e o JavaScript poderiam elevar o nível do projeto através do design e funcionalidades, respectivamente.
 
+Além disso, para a otimização da criação do projeto, utilizamos o Framework BootStrap para o design, funcionalidade e também a criação do gráfico.
+
 O projeto no momento atual (06/11/2026), ainda está em desenvolvimento e alguns ajustes ainda se fazem necessários como facilitar a visualização do gráfico de gastos. E a adição do gráfico de entradas.
