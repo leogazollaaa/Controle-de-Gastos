@@ -1,5 +1,5 @@
 
-/* Configurações gerais da página */
+
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +13,7 @@ body {
     padding: 30px;
 }
 
-/* Cabeçalho */
+
 header {
     margin-bottom: 30px;
 }
@@ -28,13 +28,13 @@ header p {
     color: #030303;
 }
 
-/* Área principal */
+
 main {
     max-width: 1000px;
     margin: 0 auto;
 }
 
-/* Cartão de resumo */
+
 .resumo {
     background-color: white;
     padding: 25px;
@@ -65,7 +65,7 @@ main {
     font-size: 15px;
 }
 
-/* Botões de entrada e saída */
+
 .acoes {
     display: flex;
     gap: 15px;
@@ -98,7 +98,7 @@ main {
     filter: brightness(0.97);
 }
 
-/* Adaptação para celulares */
+
 @media (max-width: 600px) {
     body {
         padding: 18px;
@@ -122,7 +122,7 @@ main {
 }
 
 
-/* Formulário de movimentação */
+
 .formulario {
     display: none;
     background-color: white;
@@ -155,7 +155,35 @@ main {
 }
 
 
-/* Histórico de movimentações */
+.grafico-gastos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+}
+
+.grafico-pizza {
+    width: min(100%, 200px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+}
+
+.legenda-gastos {
+    display: grid;
+    gap: 8px;
+    padding-inline-start: 24px;
+}
+
+.legenda-gastos li::marker {
+    color: var(--cor-fatia);
+}
+
+.legenda-gastos li span {
+    display: block;
+}
+
+
+
 .historico {
     background-color: white;
     padding: 25px;
@@ -199,4 +227,54 @@ main {
 .mensagem-vazia {
     color: #6b7280;
     font-size: 14px;
+}
+
+
+[data-bs-theme="dark"] body {
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+}
+
+[data-bs-theme="dark"] header h1,
+[data-bs-theme="dark"] header p {
+    color: var(--bs-body-color);
+}
+
+[data-bs-theme="dark"] .resumo,
+[data-bs-theme="dark"] .formulario,
+[data-bs-theme="dark"] .historico {
+    background-color: var(--bs-tertiary-bg);
+}
+
+[data-bs-theme="dark"] .resumo h2,
+[data-bs-theme="dark"] .mensagem-vazia {
+    color: var(--bs-secondary-color);
+}
+
+[data-bs-theme="dark"] .resumo h3,
+[data-bs-theme="dark"] .valor-entrada {
+    color: var(--bs-success-text-emphasis);
+}
+
+[data-bs-theme="dark"] .valor-saida {
+    color: var(--bs-danger-text-emphasis);
+}
+
+[data-bs-theme="dark"] .botao-entrada {
+    background-color: var(--bs-success-bg-subtle);
+    color: var(--bs-success-text-emphasis);
+}
+
+[data-bs-theme="dark"] .botao-saida {
+    background-color: var(--bs-danger-bg-subtle);
+    color: var(--bs-danger-text-emphasis);
+}
+
+[data-bs-theme="dark"] .transacao {
+    border-color: var(--bs-border-color);
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary {
+    --bs-btn-color: var(--bs-secondary-color);
+    --bs-btn-border-color: var(--bs-secondary-color);
 }
