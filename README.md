@@ -6,4 +6,4 @@ Ao longo das aulas aprendemos a desenvolver baseado em HTML e como o CSS e o Jav
 
 Além disso, para a otimização da criação do projeto, utilizamos o Framework BootStrap para o design, funcionalidade e também a criação do gráfico.
 
-O projeto no momento atual (06/11/2026), ainda está em desenvolvimento e alguns ajustes ainda se fazem necessários como facilitar a visualização do gráfico de gastos. E a adição do gráfico de entradas.
+O projeto no momento atual (08/11/2026), ainda está em fase final de desenvolvimento e alguns ajustes pontuais ainda podem aparecer. Porém a base do projeto já está 100% consolidada.
