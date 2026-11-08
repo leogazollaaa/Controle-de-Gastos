@@ -1,5 +1,5 @@
 
-// Selecionando os elementos da página
+
 const btnEntrada = document.getElementById("btnEntrada");
 const btnSaida = document.getElementById("btnSaida");
 
@@ -9,18 +9,18 @@ const tituloFormulario = document.getElementById("tituloFormulario");
 const btnCancelar = document.getElementById("btnCancelar");
 const formMovimentacao = document.getElementById("formMovimentacao");
 
-// Campos do formulário
+
 const descricao = document.getElementById("descricao");
 const valor = document.getElementById("valor");
 const categoria = document.getElementById("categoria");
 
-// Lista temporária de movimentações
+
 let movimentacoes = [];
 
-// Tipo da movimentação selecionada
+
 let tipoMovimentacao = "";
 
-// Função para abrir o formulário
+
 function abrirFormulario(tipo) {
 
     formulario.style.display = "block";
@@ -34,22 +34,22 @@ function abrirFormulario(tipo) {
     }
 }
 
-// Botão de entrada
+
 btnEntrada.addEventListener("click", function() {
     abrirFormulario("entrada");
 });
 
-// Botão de saída
+
 btnSaida.addEventListener("click", function() {
     abrirFormulario("saida");
 });
 
-// Botão cancelar
+
 btnCancelar.addEventListener("click", function() {
     formulario.style.display = "none";
 });
 
-// Salvar movimentação
+
 formMovimentacao.addEventListener("submit", function(event) {
 
     event.preventDefault();
@@ -63,6 +63,7 @@ formMovimentacao.addEventListener("submit", function(event) {
 
     movimentacoes.push(novaMovimentacao);
 
+    atualizarResumo();
     atualizarHistorico();
     atualizarGraficoGastos();
 
@@ -119,6 +120,34 @@ const formatoReais = new Intl.NumberFormat("pt-BR", {
     currency: "BRL"
 });
 
+function atualizarResumo() {
+    let entradasEmCentavos = 0;
+    let saidasEmCentavos = 0;
+
+    for (const movimento of movimentacoes) {
+        const valorEmCentavos = Math.round(movimento.valor * 100);
+        if (movimento.tipo === "entrada") {
+            entradasEmCentavos += valorEmCentavos;
+        } else if (movimento.tipo === "saida") {
+            saidasEmCentavos += valorEmCentavos;
+        }
+    }
+
+    const saldo = (entradasEmCentavos - saidasEmCentavos) / 100;
+    document.getElementById("saldoDisponivel").textContent = formatoReais.format(saldo);
+    document.getElementById("totalEntradas").textContent = formatoReais.format(entradasEmCentavos / 100);
+    document.getElementById("totalSaidas").textContent = formatoReais.format(saidasEmCentavos / 100);
+}
+
+const formatoPercentual = new Intl.NumberFormat("pt-BR", {
+    style: "percent",
+    maximumFractionDigits: 1
+});
+
+const coresDoGrafico = [
+    "#175bb5", "#a82b41", "#17734a", "#9b5100", "#6535a3", "#00707e"
+];
+
 function atualizarGraficoGastos() {
     const totais = new Map();
 
@@ -136,27 +165,49 @@ function atualizarGraficoGastos() {
     const categorias = [...totais].sort((a, b) => b[1] - a[1]);
     const totalGasto = categorias.reduce((soma, [, valor]) => soma + valor, 0);
     const grafico = document.getElementById("graficoGastos");
-    grafico.replaceChildren();
 
-    for (const [nome, valor] of categorias) {
-        const percentual = (valor / totalGasto) * 100;
-        const linha = document.createElement("div");
-        linha.className = "mb-3";
+    const pizza = document.createElement("div");
+    pizza.className = "grafico-pizza";
+    pizza.setAttribute("aria-hidden", "true");
 
-        const rotulo = document.createElement("p");
-        rotulo.className = "mb-1";
-        rotulo.textContent = nome + " · " + formatoReais.format(valor);
+    const legenda = document.createElement("ul");
+    legenda.className = "legenda-gastos mb-0";
 
-        const trilho = document.createElement("div");
-        trilho.className = "progress";
-        trilho.setAttribute("aria-hidden", "true");
+    const fatias = [];
+    let valorAcumulado = 0;
 
-        const barra = document.createElement("div");
-        barra.className = "progress-bar";
-        barra.style.width = percentual + "%";
+    categorias.forEach(([nome, valor], indice) => {
+        const cor = coresDoGrafico[indice];
+        const inicio = (valorAcumulado / totalGasto) * 100;
+        valorAcumulado += valor;
+        const fim = (valorAcumulado / totalGasto) * 100;
+        fatias.push(`${cor} ${inicio}% ${fim}%`);
 
-        trilho.appendChild(barra);
-        linha.append(rotulo, trilho);
-        grafico.appendChild(linha);
-    }
+        const item = document.createElement("li");
+        item.style.setProperty("--cor-fatia", cor);
+
+        const rotulo = document.createElement("strong");
+        rotulo.textContent = nome;
+
+        const detalhes = document.createElement("span");
+        const percentual = formatoPercentual.format(valor / totalGasto);
+        detalhes.textContent = `${formatoReais.format(valor)} · ${percentual} dos gastos`;
+
+        item.append(rotulo, detalhes);
+        legenda.appendChild(item);
+    });
+
+    pizza.style.backgroundImage = `conic-gradient(${fatias.join(", ")})`;
+    grafico.replaceChildren(pizza, legenda);
 }
+
+const btnTema = document.getElementById("btnTema");
+
+btnTema.addEventListener("click", function () {
+    const pagina = document.documentElement;
+    const modoEscuroAtivo = pagina.getAttribute("data-bs-theme") === "dark";
+    const novoTema = modoEscuroAtivo ? "light" : "dark";
+
+    pagina.setAttribute("data-bs-theme", novoTema);
+    btnTema.textContent = novoTema === "dark" ? "Modo claro" : "Modo escuro";
+});
