@@ -19,22 +19,26 @@
         <p>Controle seus gastos de forma simples.</p>
     </header>
 
+    <button type="button" id="btnTema" class="btn btn-outline-secondary btn-sm">
+    Modo escuro
+    </button>
+
     <main>
 
-        <!-- Resumo financeiro -->
+        
         <section class="resumo">
 
             <h2>Saldo disponível</h2>
-            <h3>R$ 0,00</h3>
+            <h3 id="saldoDisponivel">R$ 0,00</h3>
 
             <div class="valores">
-                <p>Entradas: R$ 0,00</p>
-                <p>Saídas: R$ 0,00</p>
+                <p>Entradas: <span id="totalEntradas">R$ 0,00</span></p>
+                <p>Saídas: <span id="totalSaidas">R$ 0,00</span></p>
             </div>
 
         </section>
 
-        <!-- Botões de entrada e saída -->
+        
         <section class="acoes">
 
             <button class="botao-entrada" id="btnEntrada" type="button">
@@ -47,7 +51,7 @@
 
         </section>
 
-        <!-- Formulário de movimentação -->
+        
         <section class="formulario" id="formulario">
 
             <h2 id="tituloFormulario">Nova movimentação</h2>
@@ -84,6 +88,9 @@
                     <option value="Transporte">Transporte</option>
                     <option value="Lazer">Lazer</option>
                     <option value="Moradia">Moradia</option>
+                    <option value="Estudos">Estudo</option>
+                    <option value="Saúde">Saúde</option>
+                    <option value="Investimentos">Investimentos</option>
                     <option value="Outros">Outros</option>
 
                 </select>
@@ -107,13 +114,13 @@
         <section class="card mb-4" aria-labelledby="tituloGastos">
             <div class="card-body">
                 <h2 id="tituloGastos" class="h5">Gastos por categoria</h2>
-                <div id="graficoGastos" aria-live="polite">
+                <div id="graficoGastos" class="grafico-gastos" aria-live="polite">
                     <p class="text-body-secondary mb-0">Nenhuma saída registrada.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Histórico de movimentações -->
+        
         <section class="historico">
 
             <h2>Transações recentes</h2>
